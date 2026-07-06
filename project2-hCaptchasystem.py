@@ -12,10 +12,32 @@ import webbrowser
 import requests
 from flask import Flask, request, render_template_string
 import threading
+import importlib
+import subprocess
+import sys
+#Ensure all packages installed
+REQUIRED_PACKAGES = ["requests", "flask"]
 
 
+def ensure_dependencies():
+    for package in REQUIRED_PACKAGES:
+        try:
+            # Dynamically import the package using its string name
+            importlib.import_module(package)
+        except ImportError:
+            print(f"[SETUP] Installing missing dependency: {package} ...")
+            try:
+                subprocess.check_call(
+                    [sys.executable, "-m", "pip", "install", package]
+                )
+                print(f"[SETUP] Successfully installed {package}.")
+            except subprocess.CalledProcessError as e:
+                print(f"[ERROR] Failed to install {package}: {e}")
+                sys.exit(1)
 
 
+# Run the check
+ensure_dependencies()
 
 
 
