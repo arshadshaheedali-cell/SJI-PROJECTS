@@ -9,8 +9,7 @@
 
 import time
 import webbrowser
-import requests
-from flask import Flask, request, render_template_string
+
 import threading
 import importlib
 import subprocess
@@ -22,7 +21,7 @@ REQUIRED_PACKAGES = ["requests", "flask"]
 def ensure_dependencies():
     for package in REQUIRED_PACKAGES:
         try:
-            # Dynamically import the package using its string name
+            
             importlib.import_module(package)
         except ImportError:
             print(f"[SETUP] Installing missing dependency: {package} ...")
@@ -36,8 +35,11 @@ def ensure_dependencies():
                 sys.exit(1)
 
 
-# Run the check
+
 ensure_dependencies()
+
+import requests
+from flask import Flask, request, render_template_string
 
 
 
@@ -339,7 +341,3 @@ if not captcha_verified:
 
 print("\n[STATUS] Access Granted. Proceeding with core terminal payload logic...")
 # #=== CORE APPLICATION HERE ===
-
-
-
-
